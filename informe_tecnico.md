@@ -161,7 +161,7 @@ Para comprobar el rendimiento del programa, configuramos tres escenarios distint
 ## 7. Desarrollo del Programa
 
 Desarrollamos dos programas sencillos escritos en Python 3 (los puedes encontrar en la carpeta principal de tu proyecto):
-* **`generar_datos.py`:** Genera de forma rápida el archivo de texto `data/temperaturas.txt` con 5 millones de registros de temperaturas aleatorias realistas (entre \(-10^\circ\text{C}\) y \(50^\circ\text{C}\)).
+* **`generar_datos.py`:** Genera de forma rápida el archivo de texto `temperaturas.txt` con 5 millones de registros de temperaturas aleatorias realistas (entre \(-10^\circ\text{C}\) y \(50^\circ\text{C}\)).
 * **`procesar_datos.py`:** El script principal que corre la prueba secuencial y las paralelas de 2 y 4 núcleos, mide el tiempo de cada una con precisión y dibuja una tabla comparativa automática con los resultados.
 
 ---

@@ -2,53 +2,53 @@ import random
 import os
 import time
 
-def generar_datos(nombre_archivo, total_registros=5000000):
+def crear_archivo_temperaturas(nombre_archivo, cantidad_datos=5000000):
     """
-    Genera un archivo de texto con mediciones de temperatura sintéticas.
-    Cada medición es un número flotante entre -10.0 y 50.0 grados Celsius,
-    con dos decimales, representando lecturas de sensores IoT.
+    Esta función crea un archivo de texto y escribe dentro de él
+    millones de lecturas de temperatura de sensores IoT aleatorios.
+    Las temperaturas se generan entre -10 y 50 grados Celsius.
     """
-    print(f"=== Generador de Datos de Temperatura IoT ===")
-    print(f"Objetivo: Crear archivo con {total_registros:,} registros.")
+    print("=== Generador de Datos de Temperatura IoT ===")
+    print(f"Preparando la creación de {cantidad_datos:,} registros...")
     
-    inicio = time.time()
+    tiempo_inicio = time.time()
     
-    # Crear la carpeta contenedora si no existe
-    directorio = os.path.dirname(nombre_archivo)
-    if directorio and not os.path.exists(directorio):
-        os.makedirs(directorio)
-        print(f"Directorio creado: {directorio}")
+    # Paso 1: Creamos la carpeta 'data' en tu computadora si no existe
+    carpeta = os.path.dirname(nombre_archivo)
+    if carpeta and not os.path.exists(carpeta):
+        os.makedirs(carpeta)
+        print(f"Carpeta creada con éxito: {carpeta}")
         
-    # Escribir en bloques de 100,000 para optimizar el rendimiento del disco
-    tamano_bloque = 100000
-    cantidad_bloques = total_registros // tamano_bloque
+    # Paso 2: Escribimos los números en el archivo de texto
+    # Para que sea sumamente rápido y no demore tu disco duro,
+    # generamos y escribimos los números en bloques de 100,000 en 100,000.
+    bloque_tamano = 100000
+    total_bloques = cantidad_datos // bloque_tamano
     
     try:
         with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
-            for i in range(cantidad_bloques):
-                # Generar un bloque de lecturas aleatorias en memoria
-                bloque = [f"{random.uniform(-10.0, 50.0):.2f}\n" for _ in range(tamano_bloque)]
-                # Escribir el bloque completo al disco de una sola vez
+            for bloque_actual in range(total_bloques):
+                # Generamos 100,000 temperaturas aleatorias con 2 decimales
+                bloque = [f"{random.uniform(-10.0, 50.0):.2f}\n" for _ in range(bloque_tamano)]
+                # Las guardamos de un solo golpe en el archivo
                 archivo.writelines(bloque)
                 
-                # Feedback visual de progreso
-                if (i + 1) % 10 == 0 or (i + 1) == cantidad_bloques:
-                    progreso = ((i + 1) / cantidad_bloques) * 100
-                    print(f"Progreso de generación: {progreso:.0f}%...")
+                # Barra de progreso visual en pantalla
+                if (bloque_actual + 1) % 10 == 0 or (bloque_actual + 1) == total_bloques:
+                    progreso = ((bloque_actual + 1) / total_bloques) * 100
+                    print(f"Guardando datos... {progreso:.0f}% completado")
                     
-        fin = time.time()
-        tamano_mb = os.path.getsize(nombre_archivo) / (1024 * 1024)
+        tiempo_fin = time.time()
+        peso_archivo = os.path.getsize(nombre_archivo) / (1024 * 1024)
         
-        print("\n=== Generación Completada ===")
-        print(f"Archivo guardado en: {nombre_archivo}")
-        print(f"Tamaño del archivo: {tamano_mb:.2f} MB")
-        print(f"Tiempo transcurrido: {fin - inicio:.2f} segundos.")
+        print("\n=== ¡Archivo Generado con Éxito! ===")
+        print(f"Guardado en: {nombre_archivo}")
+        print(f"Peso del archivo: {peso_archivo:.2f} MB")
+        print(f"Tiempo transcurrido: {tiempo_fin - tiempo_inicio:.2f} segundos.")
         
-    except IOError as e:
-        print(f"Error de E/S al escribir el archivo: {e}")
     except Exception as e:
-        print(f"Ocurrió un error inesperado: {e}")
+        print(f"Ocurrió un error al crear el archivo: {e}")
 
 if __name__ == "__main__":
-    # Generamos los datos en el directorio local
-    generar_datos("data/temperaturas.txt", 5000000)
+    # Creamos el archivo de 5 millones en la carpeta data
+    crear_archivo_temperaturas("data/temperaturas.txt", 5000000)
