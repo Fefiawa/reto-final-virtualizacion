@@ -3,7 +3,7 @@ import time
 import math
 from multiprocessing import Pool
 
-// Esta función calcula las estadísticas locales de un conjunto de datos
+# Esta función calcula las estadísticas locales de un conjunto de datos
 def calcular_estadisticas_locales(datos):
 
     if not datos:
@@ -17,7 +17,7 @@ def calcular_estadisticas_locales(datos):
 
     return cantidad, minimo, maximo, suma, suma_cuadrados
 
-//funcion para contar temporadas mayores al promedio    
+#funcion para contar temporadas mayores al promedio    
 def contar_mayores(argumentos):
 
     datos, promedio = argumentos
@@ -28,7 +28,7 @@ def contar_mayores(argumentos):
 # ==========================================================
 # ALGORITMO SECUENCIAL
 # ==========================================================
-// Esta función analiza un conjunto de temperaturas y calcula estadísticas
+# Esta función analiza un conjunto de temperaturas y calcula estadísticas
 def analizar_secuencial(temperaturas):
 
     total = len(temperaturas)
