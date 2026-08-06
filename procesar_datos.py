@@ -163,3 +163,70 @@ def cargar_temperaturas(ruta_archivo):
     print(f"Tiempo de carga: {fin - inicio:.2f} segundos\n")
 
     return temperaturas
+
+# ==========================================================
+# PROGRAMA PRINCIPAL
+# ==========================================================
+
+def mostrar_resultados(resultado, tiempo):
+
+    minimo, maximo, promedio, desviacion, mayores = resultado
+
+    print("\n========================================")
+    print("RESULTADOS DEL ANÁLISIS")
+    print("========================================")
+
+    print(f"Tiempo de ejecución : {tiempo:.4f} segundos")
+    print(f"Temperatura mínima  : {minimo:.2f} °C")
+    print(f"Temperatura máxima  : {maximo:.2f} °C")
+    print(f"Promedio            : {promedio:.2f} °C")
+    print(f"Desviación estándar : {desviacion:.2f}")
+    print(f"Mayores al promedio : {mayores:,}")
+
+    print("========================================")
+
+
+if __name__ == "__main__":
+
+    print("========================================")
+    print(" PROCESAMIENTO DE TEMPERATURAS")
+    print("========================================")
+
+    archivo = "data/temperaturas.txt"
+
+    temperaturas = cargar_temperaturas(archivo)
+
+    if temperaturas is None:
+        exit()
+
+    print("Seleccione el modo de ejecución")
+    print("1. Secuencial")
+    print("2. Paralelo (2 procesos)")
+    print("3. Paralelo (4 procesos)")
+
+    opcion = input("\nOpción: ")
+
+    inicio = time.time()
+
+    if opcion == "1":
+
+        resultado = analizar_secuencial(temperaturas)
+
+    elif opcion == "2":
+
+        resultado = analizar_paralelo(temperaturas, 2)
+
+    elif opcion == "3":
+
+        resultado = analizar_paralelo(temperaturas, 4)
+
+    else:
+
+        print("Opción no válida.")
+        exit()
+
+    fin = time.time()
+
+    mostrar_resultados(resultado, fin - inicio)
+
+    print("\nProceso finalizado correctamente.")
